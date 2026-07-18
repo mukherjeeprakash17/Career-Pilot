@@ -21,73 +21,57 @@ This document describes the complete system: the high-level architecture, the fr
 
 ---
 
-## 2. High-Level Architecture (System Block Diagram)
+## 2. High-Level Architecture (System Flow Diagram)
 
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                                   CLIENT LAYER                               │
-│                                                                              │
-│   ┌─────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐  │
-│   │  /analyze   │   │ /simulator   │   │ /interview   │   │ /outreach    │  │
-│   │  (ATS Check)│   │ (Skill Gap)  │   │ (Mock AI)    │   │ (Campaigns)  │  │
-│   └─────────────┘   └──────────────┘   └──────────────┘   └──────────────┘  │
-│   ┌─────────────┐   ┌──────────────┐                                       │
-│   │ /analytics  │   │   /about     │      Next.js 14 App Router            │
-│   │ (Market AI) │   │   /support   │      + ProjectContext (global state)  │
-│   └─────────────┘   └──────────────┘                                       │
-└───────────────────────────────┬──────────────────────────────────────────────┘
-                                │  REST (fetch) — JSON over HTTPS
-                                ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                              API GATEWAY LAYER                               │
-│                     FastAPI ASGI App  (prefix: /api/v1)                     │
-│  ┌────────────────────────────────────────────────────────────────────────┐ │
-│  │  Middleware Stack:                                                    │ │
-│  │   1. CORS Middleware (whitelisted origins)                            │ │
-│  │   2. Request Profiler (timing + IP logging)                          │ │
-│  │   3. Global Exception Interceptor (500 protection + CORS headers)    │ │
-│  └────────────────────────────────────────────────────────────────────────┘ │
-│                                                                              │
-│   ┌───────────┐ ┌───────────┐ ┌─────────────┐ ┌────────────┐ ┌───────────┐  │
-│   │  /resume  │ │  /match   │ │ /interview  │ │ /analytics │ │ /outreach │  │
-│   │  router   │ │  router   │ │  router     │ │  router    │ │  router   │  │
-│   └───────────┘ └───────────┘ └─────────────┘ └────────────┘ └───────────┘  │
-└────┬─────────────────┬──────────────┬───────────────┬───────────────┬───────┘
-     │                 │              │               │               │
-     ▼                 ▼              ▼               ▼               ▼
-┌─────────┐    ┌────────────────┐ ┌──────────┐  ┌─────────────┐ ┌───────────┐
-│ PARSING │    │ SCORING ENGINE │ │ SESSION  │  │   ADZUNA    │ │  GEMINI   │
-│ LAYER   │    │ (deterministic)│ │ STATE    │  │   CLIENT    │ │  CLIENT   │
-│ pdfplum-│    │ scoring.py     │ │ (MongoDB)│  │  (httpx)    │ │ (outreach │
-│ ber /   │    │ skill_engine/* │ │          │  │             │ │ emails)   │
-│ PyMuPDF │    │                │ │          │  │             │ │           │
-│ /docx   │    │                │ │          │  │             │ │           │
-└─────────┘    └────────────────┘ └──────────┘  └─────────────┘ └───────────┘
-     │                 │              │
-     ▼                 ▼              ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                              AI / ML INFERENCE LAYER                          │
-│  ┌────────────────┐  ┌───────────────────┐  ┌───────────────────────────┐   │
-│  │ Groq Llama 3.3  │  │ Google Gemini      │  │ Sentence-Transformers     │   │
-│  │ 70B-Versatile   │  │ flash-latest /     │  │ (all-MiniLM-L6-v2)        │   │
-│  │ — resume parse, │  │ 2.5-flash —        │  │ — semantic skill matching │   │
-│  │ JD parse, inter-│  │ detailed ATS,      │  │   via cosine similarity   │   │
-│  │ view Q&A, cover │  │ recommendations,   │  │                           │   │
-│  │ letters         │  │ fresher-job feed   │  │                           │   │
-│  └────────────────┘  └───────────────────┘  └───────────────────────────┘   │
-└──────────────────────────────────────────────────────────────────────────────┘
-     │                 │              │
-     ▼                 ▼              ▼
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                              PERSISTENCE LAYER                               │
-│   ┌───────────────────────────┐        ┌────────────────────────────────┐   │
-│   │  MongoDB Atlas (Motor)    │        │  ChromaDB (local persistent)   │   │
-│   │  • resumes                │        │  • resume_jd_skills collection │   │
-│   │  • detailed_ats_logs      │        │  • skill embeddings, tagged by │   │
-│   │  • interview_sessions     │        │    session_id + source         │   │
-│   │  • match_logs             │        │                                │   │
-│   └───────────────────────────┘        └────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────────────────────┘
+We use a modern, decoupled architecture. Below is a simplified flow diagram showing how the User, Frontend, Backend, AI Models, and Databases interact. 
+
+```mermaid
+flowchart TD
+    User([👤 User]) -->|Uploads Resume & JD<br>Practices Interviews| WebApp
+
+    subgraph Frontend ["💻 Client Layer (Next.js)"]
+        WebApp[Interactive Web Dashboard]
+    end
+
+    WebApp -->|REST API Requests| API
+
+    subgraph BackendLayer ["⚙️ Backend Layer (FastAPI)"]
+        API[API Gateway]
+        Parser[📄 Document Parsers]
+        Engine[🎯 Match & Scoring Engine]
+        
+        API --> Parser
+        API --> Engine
+    end
+
+    subgraph AILayer ["🧠 AI & Inference Layer"]
+        Groq[Groq Llama 3<br>Data Extraction & Chat]
+        Gemini[Google Gemini<br>Recommendations]
+        Semantic[Semantic Skill Matcher]
+    end
+
+    subgraph DataLayer ["🗄️ Persistence Layer"]
+        Mongo[(MongoDB<br>User Data & Sessions)]
+        Chroma[(ChromaDB<br>Vector Embeddings)]
+    end
+
+    Parser -->|AI Parsing| Groq
+    Engine -->|AI Advice| Gemini
+    Engine -->|Similarity Check| Semantic
+
+    API -->|Read/Write| Mongo
+    Engine -->|Search| Chroma
+    
+    %% Styling
+    classDef front fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+    classDef back fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef ai fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef db fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+
+    class WebApp front;
+    class API,Parser,Engine back;
+    class Groq,Gemini,Semantic ai;
+    class Mongo,Chroma db;
 ```
 
 ---
