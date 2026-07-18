@@ -1,0 +1,198 @@
+{
+    "raw": {
+        "candidate_name": "Abhineet Mukherjee",
+        "email": "abhineet.mukherjee.ug23@nsut.ac.in",
+        "phone": "+91-9509429199",
+        "location": "",
+        "linkedin": "",
+        "github": "https://github.com/mukherjeeprakash17",
+        "portfolio": "",
+        "summary": "",
+        "technical_skills": [
+            "Python",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "Matplotlib",
+            "SQL",
+            "Excel",
+            "Data Visualization",
+            "LangChain",
+            "MS Excel",
+            "PowerPoint",
+            "MYSQL",
+            "Canva",
+            "Spacy",
+            "NLP",
+            "Generative AI",
+            "LLM APIs",
+            "Resume Parsing",
+            "Streamlit",
+            "TMDB API"
+        ],
+        "soft_skills": [
+            "Communication",
+            "Leadership",
+            "Analytical Reasoning",
+            "Teamwork",
+            "Event Coordination",
+            "Adaptability"
+        ],
+        "experience": {
+            "total_years": 0,
+            "roles": [
+                {
+                    "company": "DSCL India Limited",
+                    "designation": "Accounts & Development Intern",
+                    "duration": "June 2025 \u2013 July 2025",
+                    "description": "Gained exposure to accounting and finance operations within a large-scale manufacturing organization, developing an understanding of corporate reporting, financial workflows and the role of finance. Acquired familiarity with SAP ERP and its application in integrating finance, procurement and inventory functions.",
+                    "skills_used": [
+                        "SAP ERP",
+                        "Financial Workflows",
+                        "Corporate Reporting"
+                    ]
+                }
+            ]
+        },
+        "education": [
+            {
+                "degree": "B.Tech. ICE",
+                "field_of_study": "Instrumentation And Control Engineering",
+                "institution": "Netaji Subhas University of Technology",
+                "year": "2023-2027"
+            },
+            {
+                "degree": "Class XII",
+                "field_of_study": "",
+                "institution": "Shiv Jyoti Senior Secondary School, India",
+                "year": "2023"
+            },
+            {
+                "degree": "Class X",
+                "field_of_study": "",
+                "institution": "Saint Pauls School, India",
+                "year": "2021"
+            }
+        ],
+        "certifications": [],
+        "projects": [
+            {
+                "project_name": "ATS Resume Analyzer And Skill Gap Assessment System",
+                "description": "Developed an AI-powered Resume Analyzer using NLP and resume parsing techniques to extract candidate education, experience, projects and skills from resumes.",
+                "technologies": [
+                    "Python",
+                    "NLP",
+                    "Generative AI",
+                    "LLM APIs",
+                    "Resume Parsing",
+                    "Scikit-learn"
+                ],
+                "domain": "Data Analytics"
+            },
+            {
+                "project_name": "Movie Recommender System (Netflix)",
+                "description": "Built a content-based recommendation engine using the TMDB 5000 Movie Dataset, transforming raw movie data into actionable insights to improve content discovery and user engagement.",
+                "technologies": [
+                    "Python",
+                    "Pandas",
+                    "NumPy",
+                    "Scikit-learn",
+                    "Streamlit",
+                    "TMDB API"
+                ],
+                "domain": "Machine Learning"
+            },
+            {
+                "project_name": "Autonomous Drone System \u2013 Tata Elxsi Teliport Challenge",
+                "description": "Ranked among the top 3,000 teams out of 47,000+ registrations by designing a high-level system architecture enabling autonomous takeoff and landing on a moving platform.",
+                "technologies": [
+                    "IMU",
+                    "GNSS",
+                    "Vision",
+                    "UWB"
+                ],
+                "domain": "Machine Learning And Artifical Intelligence"
+            }
+        ],
+        "achievements": [
+            "Ranked among the top 3,000 teams out of 47,000+ registrations in the Tata Elxsi Teliport Challenge"
+        ],
+        "keywords": [
+            "Python",
+            "Machine Learning",
+            "Data Analysis",
+            "SQL",
+            "NLP",
+            "Generative AI",
+            "LLM APIs",
+            "Resume Parsing",
+            "Scikit-learn",
+            "Streamlit",
+            "TMDB API"
+        ]
+    },
+    "normalized": {
+        "technical_skills": [
+            "Python",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "Matplotlib",
+            "SQL",
+            "Excel",
+            "Data Visualization",
+            "LangChain",
+            "MS Excel",
+            "PowerPoint",
+            "MySQL",
+            "Canva",
+            "Spacy",
+            "Natural Language Processing",
+            "Generative AI",
+            "LLM APIs",
+            "Resume Parsing",
+            "Streamlit",
+            "TMDB API"
+        ],
+        "soft_skills": [
+            "Communication",
+            "Leadership",
+            "Analytical Reasoning",
+            "Teamwork",
+            "Event Coordination",
+            "Adaptability"
+        ],
+        "keywords": [
+            "Python",
+            "Machine Learning",
+            "Data Analysis",
+            "Sql",
+            "Natural Language Processing",
+            "Generative Ai",
+            "Llm Apis",
+            "Resume Parsing",
+            "Scikit-Learn",
+            "Streamlit",
+            "Tmdb Api"
+        ],
+        "certifications": [],
+        "project_domains": [
+            "Data Analytics",
+            "Machine Learning",
+            "Machine Learning And Artifical Intelligence"
+        ],
+        "education_degrees": [
+            "B.Tech. Ice",
+            "Class Xii",
+            "Class X"
+        ],
+        "education_fields": [
+            "Instrumentation And Control Engineering",
+            ""
+        ],
+        "job_titles": [
+            "Accounts & Development Intern"
+        ],
+        "experience_domains": []
+    }
+}
